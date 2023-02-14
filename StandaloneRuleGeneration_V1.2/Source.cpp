@@ -37,41 +37,41 @@ int main()
 
 	// create vectors which hold the id values. Last value is class output
 	// Hard coded //
-	vector<int> id0 = { 0, 0, 0, 0, 1 };
-	vector<int> id1 = { 1, 0, 0, 0, 1 };
-	vector<int> id2 = { 1, 1, 1, 1, 1 };
-	vector<int> id3 = { 1, 2, 1, 1, 1 };
-	vector<int> id4 = { 1, 3, 1, 1, 1 };
-	vector<int> id5 = { 0, 0, 2, 2, 1 };
-	vector<int> id6 = { 0, 0, 1, 2, 1 };
-	vector<int> id7 = { 0, 0, 0, 2, 1 };
-	vector<int> id8 = { 1, 2, 2, 0, 1 };
-	vector<int> id9 = { 0, 2, 2, 0, 1 };
-	vector<int> id10 = { 1, 2, 0, 1, 2 };
-	vector<int> id11 = { 1, 1, 0, 1, 2 };
-	vector<int> id12 = { 1, 0, 0, 1, 2 };
-	vector<int> id13 = { 1, 1, 2, 2, 2 };
-	vector<int> id14 = { 0, 1, 2, 2, 2 };
-	vector<int> id15 = { 0, 2, 2, 0, 2 };
-	vector<int> id16 = { 0, 2, 1, 0, 2 };
-	vector<int> id17 = { 0, 2, 0, 0, 2 };
-	vector<int> id18 = { 1, 1, 2, 1, 2 };
-	vector<int> id19 = { 1, 1, 2, 2, 2 };
+	vector<int> id0  =	{ 0, 0, 0, 0, 1 };
+	vector<int> id1  =	{ 1, 0, 0, 0, 1 };
+	vector<int> id2  =	{ 1, 1, 1, 1, 1 };
+	vector<int> id3  =	{ 1, 2, 1, 1, 1 };
+	vector<int> id4  =	{ 1, 3, 1, 1, 1 };
+	vector<int> id5  =	{ 0, 0, 2, 2, 1 };
+	vector<int> id6  =	{ 0, 0, 1, 2, 1 };
+	vector<int> id7  =	{ 0, 0, 0, 2, 1 };
+	vector<int> id8  =	{ 1, 2, 2, 0, 1 };
+	vector<int> id9  =	{ 0, 2, 2, 0, 1 };
+	vector<int> id10 =	{ 1, 2, 0, 1, 2 };
+	vector<int> id11 =	{ 1, 1, 0, 1, 2 };
+	vector<int> id12 =	{ 1, 0, 0, 1, 2 };
+	vector<int> id13 =	{ 1, 1, 2, 2, 2 };
+	vector<int> id14 =	{ 0, 1, 2, 2, 2 };
+	vector<int> id15 =	{ 0, 2, 2, 0, 2 };
+	vector<int> id16 =  { 0, 2, 1, 0, 2 };
+	vector<int> id17 =  { 0, 2, 0, 0, 2 };
+	vector<int> id18 =  { 1, 1, 2, 1, 2 };
+	vector<int> id19 =  { 1, 1, 2, 2, 2 };
 
 	// create vector to hold all data
 	vector<vector<int>> data;
 
 	// put data into data vector
-	data.push_back(id0);
-	data.push_back(id1);
-	data.push_back(id2);
-	data.push_back(id3);
-	data.push_back(id4);
-	data.push_back(id5);
-	data.push_back(id6);
-	data.push_back(id7);
-	data.push_back(id8);
-	data.push_back(id9);
+	data.push_back(id0 );
+	data.push_back(id1 );
+	data.push_back(id2 );
+	data.push_back(id3 );
+	data.push_back(id4 );
+	data.push_back(id5 );
+	data.push_back(id6 );
+	data.push_back(id7 );
+	data.push_back(id8 );
+	data.push_back(id9 );
 	data.push_back(id10);
 	data.push_back(id11);
 	data.push_back(id12);
@@ -83,6 +83,7 @@ int main()
 	data.push_back(id18);
 	data.push_back(id19);
 
+	//these two values not currently in use
 	// find the minimum and maximum for each coordinate/attribute
 	vector<int> coordinateMax;
 	vector<int> coordinateMin;
@@ -114,7 +115,6 @@ int main()
 					coordinateMin.at(dataYIndex) = data.at(dataXIndex).at(dataYIndex);
 				}
 			}
-
 		}
 	}
 
@@ -122,7 +122,7 @@ int main()
 	vector<rule> rules;
 
 	// create temporary rule structure for information tracking
-	rule * tempRule;
+	rule* tempRule;
 
 	// int vector to store the index of cases which have an absolute value of 1 when compared to the comparison case
 	vector<int> matches;
@@ -158,13 +158,13 @@ int main()
 		// push the current data being compared into the first index of the matches vector
 		matches.push_back(compXIndex);
 
+		// assign the data to the comparison case
+		comparisonCase = data.at(compXIndex);
+
 		for (int dataXIndex = 0; dataXIndex < data.size(); dataXIndex++)
 		{
 			for (int dataYIndex = 0; dataYIndex < (data.at(dataXIndex).size() - 1); dataYIndex++)
 			{
-				// assign the data to the comparison case
-				comparisonCase = data.at(compXIndex);
-
 				// check that the comparisonX and the dataX are not the same
 				if (compXIndex != dataXIndex)
 				{
@@ -230,88 +230,86 @@ int main()
 			vector<int> tempInd;
 
 			// the first value in the match vector is the id of the original compared data
-			if (match != 0)
+			if (match > 0)
 			{
 				// iterate over the matched dataID to determine if it can be expanded
 				for (int dataIndex = 0; dataIndex < (data.at(matches.at(match)).size() - 1); dataIndex++)
 				{
 
-					if(data.size() > matches.at(match))
+					// check if the match can be expanded upwards
+					if (expansionFound == false && comparisonCase.at(dataIndex) == (data.at(matches.at(match)).at(dataIndex) + 1) )
 					{
-						// check if the match can be expanded upwards
-						if (expansionFound == false && comparisonCase.at(dataIndex) == (data.at(matches.at(match)).at(dataIndex) + 1) )
-						{
-							// set the expansion found flag to true
-							expansionFound = true;
+						// set the expansion found flag to true
+						expansionFound = true;
 
-							// set the expand flag to show it is an downward expansion
-							tempFlags.push_back(-1);
+						// set the expand flag to show it is an downward expansion
+						tempFlags.push_back(-1);
 
-							// record the expansion index
-							tempInd.push_back(dataIndex);
+						// record the expansion index
+						tempInd.push_back(dataIndex);
 
-							/*
-							cout << "Downward Expansion Found in match #" << match << endl;
-							cout << "\tData at: " << dataIndex << " is: " << comparisonCase.at(dataIndex) << endl;
-							cout << "\tExpansion: " << matches.at(match) << " at: " << match << " is: " << (data.at(matches.at(match)).at(dataIndex) + 1) << endl;
-							*/
-						}
-						// check if the match can be expanded downwards
-						else if (expansionFound == false && comparisonCase.at(dataIndex) == (data.at(matches.at(match)).at(dataIndex) - 1) )
-						{
-							// set the expansion found flag to true
-							expansionFound = true;
-
-							// set the expand flag to show it is an upward expansion
-							tempFlags.push_back(1);
-
-							// record the expansion index
-							tempInd.push_back(dataIndex);
-
-							/*
-							cout << "Upward Expansion Found in match #" << match << endl;
-							cout << "\tData at: " << dataIndex << " is: " << comparisonCase.at(dataIndex) << endl;
-							cout << "\tExpansion: " << matches.at(match) << " at: " << match << " is: " << (data.at(matches.at(match)).at(dataIndex) + 1) << endl;
-							*/
-						}
-						// this means that there are more than one expansions in the match
-						// Ex: comparison Case = {0, 1, 0 ,0}
-						// 	   match case = {1, 0, 0, 1}
-						// In the above example, the difference in the sums is an absolute value of 1, but there is more than one possible expansion
-						else if (expansionFound == true && comparisonCase.at(dataIndex) != (data.at(matches.at(match)).at(dataIndex)))
-						{
-							// remove the last flag pushed into the expansion flag vector
-							if (tempFlags.size() > 0)
-							{
-								tempFlags.pop_back();
-							}
-
-							if (tempInd.size() > 0)
-							{
-								tempInd.pop_back();
-							}
-
-							break;
-						}
-						// check if there is an expansion that is too large or too small
-						// Ex: ID1 (0, 0, 0, 1), ID2 (0, 0, 0, 3)
-						// Ex: ID1 (0, 0, 0, 3), ID2 (0, 0, 0, 1)
-						else if ((comparisonCase.at(dataIndex) > (data.at(matches.at(match)).at(dataIndex) + 1)) || (comparisonCase.at(dataIndex) < (data.at(matches.at(match)).at(dataIndex) - 1)))
-						{
-							// clear the last flag pushed if there are any
-							if (tempFlags.size() > 0)
-							{
-								tempFlags.pop_back();
-							}
-							break;
-						}
-						// else the comparison case and the data are the same value
-						else
-						{
-							continue;
-						}
+						/*
+						cout << "Downward Expansion Found in match #" << match << endl;
+						cout << "\tData at: " << dataIndex << " is: " << comparisonCase.at(dataIndex) << endl;
+						cout << "\tExpansion: " << matches.at(match) << " at: " << match << " is: " << (data.at(matches.at(match)).at(dataIndex) + 1) << endl;
+						*/
 					}
-				} // end dataIndex
+					// check if the match can be expanded downwards
+					else if (expansionFound == false && comparisonCase.at(dataIndex) == (data.at(matches.at(match)).at(dataIndex) - 1) )
+					{
+						// set the expansion found flag to true
+						expansionFound = true;
+
+						// set the expand flag to show it is an upward expansion
+						tempFlags.push_back(1);
+
+						// record the expansion index
+						tempInd.push_back(dataIndex);
+
+						/*
+						cout << "Upward Expansion Found in match #" << match << endl;
+						cout << "\tData at: " << dataIndex << " is: " << comparisonCase.at(dataIndex) << endl;
+						cout << "\tExpansion: " << matches.at(match) << " at: " << match << " is: " << (data.at(matches.at(match)).at(dataIndex) + 1) << endl;
+						*/
+					}
+					// this means that there are more than one expansions in the match
+					// Ex: comparison Case = {0, 1, 0 ,0}
+					// 	   match case = {1, 0, 0, 1}
+					// In the above example, the difference in the sums is an absolute value of 1, but there is more than one possible expansion
+					else if (expansionFound == true && comparisonCase.at(dataIndex) != (data.at(matches.at(match)).at(dataIndex)))
+					{
+						// remove the last flag pushed into the expansion flag vector
+						if (tempFlags.size() > 0)
+						{
+							tempFlags.pop_back();
+						}
+
+						if (tempInd.size() > 0)
+						{
+							tempInd.pop_back();
+						}
+
+						break;
+					}
+					// check if there is an expansion that is too large or too small
+					// Ex: ID1 (0, 0, 0, 1), ID2 (0, 0, 0, 3)
+					// Ex: ID1 (0, 0, 0, 3), ID2 (0, 0, 0, 1)
+					else if ((comparisonCase.at(dataIndex) > (data.at(matches.at(match)).at(dataIndex) + 1)) || (comparisonCase.at(dataIndex) < (data.at(matches.at(match)).at(dataIndex) - 1)))
+					{
+						// clear the last flag pushed if there are any
+						if (tempFlags.size() > 0)
+						{
+							tempFlags.pop_back();
+						}
+						break;
+					}
+					// else the comparison case and the data are the same value
+					else
+					{
+						continue;
+					}
+				} 
+				// end dataIndex
 
 				if (expansionFound == true && tempFlags.size() > 0)
 				{
@@ -367,7 +365,7 @@ int main()
 	//			  Data 1 = {0, 1, 1, 1}
 	//			  Data 2 = {1, 1, 1, 1}
 	//			  Data 3 = {2, 1, 1, 1}
-	//			  Max for X1 = 3, min = 0
+	//			  Max for X1 = 2, min = 0
 	//			  Rule: x1 <= 2, x2 = 1, x3 = 1, x4 = 1
 	for (int dataX = 0; dataX < expandable.size(); dataX++)
 	{
