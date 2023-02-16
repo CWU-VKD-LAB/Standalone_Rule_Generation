@@ -301,6 +301,7 @@ int main()
 						{
 							tempFlags.pop_back();
 						}
+
 						break;
 					}
 					// else the comparison case and the data are the same value
