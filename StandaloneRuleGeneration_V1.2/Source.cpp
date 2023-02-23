@@ -83,40 +83,58 @@ int main()
 	data.push_back(id18);
 	data.push_back(id19);
 
-	//these two values not currently in use
 	// find the minimum and maximum for each coordinate/attribute
 	vector<int> coordinateMax;
 	vector<int> coordinateMin;
 
-	for (int dataXIndex = 0; dataXIndex < data.size(); dataXIndex++)
-	{
-		for (int dataYIndex = 0; dataYIndex < (data.at(dataXIndex).size() - 1); dataYIndex++)
-		{
-			if (dataYIndex == 0)
-			{
-				// push the first data segment into the max and min vectors
-				for (int firstData = 0; firstData < (data.at(dataXIndex).size() - 1); firstData++)
-				{
-					coordinateMax.push_back(data.at(dataXIndex).at(firstData));
-					coordinateMin.push_back(data.at(dataXIndex).at(firstData));
-				}
-			}
-			else
-			{
-				// if the current data is greater than the current max data
-				if (data.at(dataXIndex).at(dataYIndex) > coordinateMax.at(dataYIndex))
-				{
-					coordinateMax.at(dataYIndex) = data.at(dataXIndex).at(dataYIndex);
-				}
+	//for (int dataXIndex = 0; dataXIndex < data.size(); dataXIndex++)
+	//{
+	//	for (int dataYIndex = 0; dataYIndex < (data.at(dataXIndex).size() - 1); dataYIndex++)
+	//	{
+	//		if (dataYIndex == 0)
+	//		{
+	//			// push the first data segment into the max and min vectors
+	//			for (int firstData = 0; firstData < (data.at(dataXIndex).size() - 1); firstData++)
+	//			{
+	//				coordinateMax.push_back(data.at(dataXIndex).at(firstData));
+	//				coordinateMin.push_back(data.at(dataXIndex).at(firstData));
+	//			}
+	//		}
+	//		else
+	//		{
+	//			// if the current data is greater than the current max data
+	//			if (data.at(dataXIndex).at(dataYIndex) > coordinateMax.at(dataYIndex))
+	//			{
+	//				coordinateMax.at(dataYIndex) = data.at(dataXIndex).at(dataYIndex);
+	//			}
 
-				// if the current data is less than the curren min data
-				if (data.at(dataXIndex).at(dataYIndex) < coordinateMin.at(dataYIndex))
-				{
-					coordinateMin.at(dataYIndex) = data.at(dataXIndex).at(dataYIndex);
-				}
+	//			// if the current data is less than the curren min data
+	//			if (data.at(dataXIndex).at(dataYIndex) < coordinateMin.at(dataYIndex))
+	//			{
+	//				coordinateMin.at(dataYIndex) = data.at(dataXIndex).at(dataYIndex);
+	//			}
+	//		}
+	//	}
+	//}
+
+	for (int dataYIndex = 0; dataYIndex < (data.at(0).size() - 1); dataYIndex++)
+	{
+		coordinateMax.push_back(data.at(0).at(dataYIndex));
+		coordinateMin.push_back(data.at(0).at(dataYIndex));
+
+		for (int dataXIndex = 0; dataXIndex < data.size(); dataXIndex++)
+		{
+			if (data.at(dataXIndex).at(dataYIndex) > coordinateMax.at(dataYIndex))
+			{
+				coordinateMax.at(dataYIndex) = data.at(dataXIndex).at(dataYIndex);
+			}
+			else if(data.at(dataXIndex).at(dataYIndex) < coordinateMin.at(dataYIndex))
+			{
+				coordinateMin.at(dataYIndex) = data.at(dataXIndex).at(dataYIndex);
 			}
 		}
 	}
+
 
 	// create vector of rules generated
 	vector<rule> rules;
@@ -392,7 +410,7 @@ int main()
 			}
 
 			// record the expansion index to determine which position should be checked in the chain
-			int expansionIndexTemp = expansionIndexes.at(dataIndex).at(expand - 1);
+			int expansionIndexTemp = expansionIndexes.at(dataIndex).at(0);
 
 			// add the expansionIndex to the rule
 			tempRule->expansionIndex = expansionIndexTemp;
@@ -412,7 +430,7 @@ int main()
 					// this means that the expansion from this point can be a less than rule
 
 					// add the expansion to the chain
-					expansionChain.push_back(expandable.at(dataX).at(expand));
+					expansionChain.push_back(expandable.at(dataX).at(1));
 
 					bool ruleExpansionFound = false;
 
@@ -420,7 +438,7 @@ int main()
 					for (int i = 0; i < expandable.size(); i++)
 					{
 						// check if the expansion from the original coordinate has any expansions of its own
-						if (expandable.at(i).at(0) == expandable.at(dataIndex).at(expand))
+						if (expandable.at(i).at(0) == expandable.at(dataIndex).at(1))
 						{
 							// check if the next expansion can expand along the same index as the previous expansion
 							for (int j = 0; j < expansionIndexes.at(i).size(); j++)
@@ -480,7 +498,6 @@ int main()
 				// clear the expansion Chain vector
 				expansionChain.clear();
 			}
-
 		} // end expansion innner for loop
 	} // end expansion outer for loop
 
