@@ -37,6 +37,50 @@ int main()
 
 	// create vectors which hold the id values. Last value is class output
 	// Hard coded //
+	//vector<int> id0  =	{ 0, 0, 0, 0, 1 };
+	//vector<int> id1  =	{ 1, 0, 0, 0, 1 };
+	//vector<int> id2  =	{ 1, 1, 1, 1, 1 };
+	//vector<int> id3  =	{ 1, 2, 1, 1, 1 };
+	//vector<int> id4  =	{ 1, 3, 1, 1, 1 };
+	//vector<int> id5  =	{ 0, 0, 2, 2, 1 };
+	//vector<int> id6  =	{ 0, 0, 1, 2, 1 };
+	//vector<int> id7  =	{ 0, 0, 0, 2, 1 };
+	//vector<int> id8  =	{ 1, 2, 2, 0, 1 };
+	//vector<int> id9  =	{ 0, 2, 2, 0, 1 };
+	//vector<int> id10 =	{ 1, 2, 0, 1, 2 };
+	//vector<int> id11 =	{ 1, 1, 0, 1, 2 };
+	//vector<int> id12 =	{ 1, 0, 0, 1, 2 };
+	//vector<int> id13 =	{ 1, 1, 2, 2, 2 };
+	//vector<int> id14 =	{ 0, 1, 2, 2, 2 };
+	//vector<int> id15 =	{ 0, 2, 2, 0, 2 };
+	//vector<int> id16 =  { 0, 2, 1, 0, 2 };
+	//vector<int> id17 =  { 0, 2, 0, 0, 2 };
+	//vector<int> id18 =  { 1, 1, 2, 1, 2 };
+	//vector<int> id19 =  { 1, 1, 2, 2, 2 };
+
+
+	//vector<int> id0 =  { 1, 0, 0, 0, 1 };
+	//vector<int> id1 =  { 2, 0, 0, 0, 1 };
+	//vector<int> id2 =  { 1, 0, 0, 0, 1 };
+	//vector<int> id3 =  { 2, 0, 0, 0, 1 };
+	//vector<int> id4 =  { 1, 0, 0, 0, 1 };
+	//vector<int> id5 =  { 0, 0, 0, 0, 1 };
+	//vector<int> id6 =  { 0, 0, 0, 0, 1 };
+	//vector<int> id7 =  { 0, 0, 0, 0, 1 };
+	//vector<int> id8 =  { 0, 0, 0, 0, 1 };
+	//vector<int> id9 =  { 0, 0, 0, 0, 1 };
+	//vector<int> id10 = { 3, 0, 0, 0, 2 };
+	//vector<int> id11 = { 3, 0, 0, 0, 2 };
+	//vector<int> id12 = { 3, 0, 0, 0, 2 };
+	//vector<int> id13 = { 3, 0, 0, 0, 2 };
+	//vector<int> id14 = { 3, 0, 0, 0, 2 };
+	//vector<int> id15 = { 3, 0, 0, 0, 2 };
+	//vector<int> id16 = { 3, 0, 0, 0, 2 };
+	//vector<int> id17 = { 3, 0, 0, 0, 2 };
+	//vector<int> id18 = { 3, 0, 0, 0, 2 };
+	//vector<int> id19 = { 3, 0, 0, 0, 2 };
+
+
 	vector<int> id0  =	{ 0, 0, 0, 0, 1 };
 	vector<int> id1  =	{ 1, 0, 0, 0, 1 };
 	vector<int> id2  =	{ 1, 1, 1, 1, 1 };
@@ -46,17 +90,18 @@ int main()
 	vector<int> id6  =	{ 0, 0, 1, 2, 1 };
 	vector<int> id7  =	{ 0, 0, 0, 2, 1 };
 	vector<int> id8  =	{ 1, 2, 2, 0, 1 };
-	vector<int> id9  =	{ 0, 2, 2, 0, 1 };
-	vector<int> id10 =	{ 1, 2, 0, 1, 2 };
-	vector<int> id11 =	{ 1, 1, 0, 1, 2 };
-	vector<int> id12 =	{ 1, 0, 0, 1, 2 };
-	vector<int> id13 =	{ 1, 1, 2, 2, 2 };
-	vector<int> id14 =	{ 0, 1, 2, 2, 2 };
-	vector<int> id15 =	{ 0, 2, 2, 0, 2 };
-	vector<int> id16 =  { 0, 2, 1, 0, 2 };
-	vector<int> id17 =  { 0, 2, 0, 0, 2 };
-	vector<int> id18 =  { 1, 1, 2, 1, 2 };
-	vector<int> id19 =  { 1, 1, 2, 2, 2 };
+	vector<int> id9  =	{ 2, 2, 2, 0, 1 };
+	vector<int> id10 =	{ 3, 2, 0, 1, 2 };
+	vector<int> id11 =	{ 3, 1, 0, 1, 2 };
+	vector<int> id12 =	{ 3, 0, 0, 1, 2 };
+	vector<int> id13 =	{ 3, 1, 2, 2, 2 };
+	vector<int> id14 =	{ 4, 1, 2, 2, 2 };
+	vector<int> id15 =	{ 3, 2, 2, 0, 2 };
+	vector<int> id16 =  { 4, 2, 1, 0, 2 };
+	vector<int> id17 =  { 4, 2, 0, 0, 2 };
+	vector<int> id18 =  { 3, 1, 2, 1, 2 };
+	vector<int> id19 =  { 3, 1, 2, 2, 2 };
+
 
 	// create vector to hold all data
 	vector<vector<int>> data;
@@ -140,16 +185,7 @@ int main()
 	vector<rule> rules;
 
 	// create temporary rule structure for information tracking
-	rule* tempRule;
-
-	// int vector to store the index of cases which have an absolute value of 1 when compared to the comparison case
-	vector<int> matches;
-
-	// comparison case to keep track of current case to be compared
-	vector<int> comparisonCase;
-
-	// vector to hold the difference between the two cases (see example below)
-	vector<int> difference;
+	rule* tempRule;	
 
 	// 2d vector to hold all of the valid expandable data ids 
 	vector<vector<int>> expandable;
@@ -170,14 +206,20 @@ int main()
 	// take the absolute value = 1
 	for (int compXIndex = 0; compXIndex < data.size(); compXIndex++)
 	{
+		// int vector to store the index of cases which have an absolute value of 1 when compared to the comparison case
+		vector<int> matches;
+
+		// vector to hold the difference between the two cases (see example below)
+		vector<int> difference;
+
 		// clear matches
 		matches.clear();
 
 		// push the current data being compared into the first index of the matches vector
 		matches.push_back(compXIndex);
 
-		// assign the data to the comparison case
-		comparisonCase = data.at(compXIndex);
+		// comparison case to keep track of current case to be compared
+		vector<int> comparisonCase = data.at(compXIndex);
 
 		for (int dataXIndex = 0; dataXIndex < data.size(); dataXIndex++)
 		{
@@ -391,6 +433,7 @@ int main()
 		// get the first index of the expandable vector which is the data index that is being expanded upon
 		int dataIndex = expandable.at(dataX).at(0);
 
+		//will always only loop 1 time?
 		for (int expand = 1; expand < expandable.at(dataX).size(); expand++)
 		{
 			// create a boolean value to end the while loop if the expansion cannot be made into a rule
@@ -404,13 +447,15 @@ int main()
 			// pushback the dataIndex to follow the chain of expansion
 			vector<int> expansionChain;
 
+			//if looking at the first registered expansion
 			if (dataX == 0)
 			{
 				expansionChain.push_back(dataIndex);
 			}
 
 			// record the expansion index to determine which position should be checked in the chain
-			int expansionIndexTemp = expansionIndexes.at(dataIndex).at(0);
+			//changed dataIndex -> dataX; might need to be changed back
+			int expansionIndexTemp = expansionIndexes.at(dataX).at(0);
 
 			// add the expansionIndex to the rule
 			tempRule->expansionIndex = expansionIndexTemp;
@@ -418,10 +463,9 @@ int main()
 			while (endExpansionRuleCheck == false)
 			{
 				// if the data on the expansion coordinate is not the minimum value, break out of the loop
-				if ( data.at(dataIndex).at(expansionIndexTemp) != coordinateMin.at(expansionIndexTemp) )
+				if (data.at(dataIndex).at(expansionIndexTemp) != coordinateMin.at(expansionIndexTemp) )
 				{
 					endExpansionRuleCheck = true;
-
 					break;
 				}
 				else
@@ -523,10 +567,10 @@ int main()
 		cout << "X" << (i + 1) << " = " << data.at(rules.at(i).ruleVals.at(rules.at(i).ruleVals.size() - 1)).at(rules.at(i).expansionIndex) << endl;
 
 		// print the class the rule covers
-		cout << "Rule " << i << " covers class " << rules.at(i).classCovered << endl;
+		cout << "Rule " << (i+1) << " covers class " << rules.at(i).classCovered << endl;
 
 		// num cases covered divided by the number of cases in the data
-		double coveragePercent = ((double) rules.at(i).coverageCounter / data.size());
+		double coveragePercent = ((double) rules.at(i).coverageCounter / data.size() * 100);
 
 		cout << "Number of cases covered: " << rules.at(i).coverageCounter << endl;
 		cout << "Coverage of all cases: " << (coveragePercent) << "%" << endl;
