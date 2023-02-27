@@ -431,6 +431,7 @@ int main()
 	for (int dataX = 0; dataX < expandable.size(); dataX++)//picks up index of the expandable vector
 	{
 		// get the first index of the expandable vector which is the data index that is being expanded upon
+		// data index = the row of what is being expanded upon from the expansion of dataX. 
 		int dataIndex = expandable.at(dataX).at(0);
 
 		//will always only loop 1 time?
@@ -555,11 +556,11 @@ int main()
 	} // end expansion outer for loop
 
 
-	
+	cout << "Total rules: " << rules.size() << endl;
+
 	// print results
 	for(int i = 0; i < rules.size(); i++)
 	{
-		cout << "Total rules: " << rules.size() << endl;
 		cout << "Rule " << i + 1 << " : " << endl;
 
 		for (int dataPrint = 0; dataPrint < data.at(rules.at(i).ruleVals.at(rules.at(i).ruleVals.size() - 1)).size() - 1; dataPrint++)
