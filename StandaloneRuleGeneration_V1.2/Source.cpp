@@ -37,7 +37,7 @@ int main()
 
 	// create vectors which hold the id values. Last value is class output
 	// Hard coded //
-	vector<int> id0  =	{ 0, 0, 0, 0, 1 };
+	/*vector<int> id0  =	{ 0, 0, 0, 0, 1 };
 	vector<int> id1  =	{ 1, 0, 0, 0, 1 };
 	vector<int> id2  =	{ 1, 1, 1, 1, 1 };
 	vector<int> id3  =	{ 1, 2, 1, 1, 1 };
@@ -56,7 +56,7 @@ int main()
 	vector<int> id16 =  { 0, 2, 1, 0, 2 };
 	vector<int> id17 =  { 0, 2, 0, 0, 2 };
 	vector<int> id18 =  { 1, 1, 2, 1, 2 };
-	vector<int> id19 =  { 1, 1, 2, 2, 2 };
+	vector<int> id19 =  { 1, 1, 2, 2, 2 };*/
 
 
 	//vector<int> id0 =  { 1, 0, 0, 0, 1 };
@@ -81,7 +81,7 @@ int main()
 	//vector<int> id19 = { 3, 0, 0, 0, 2 };
 
 
-	/*vector<int> id0  =	{ 0, 0, 0, 0, 1 };
+	vector<int> id0  =	{ 0, 0, 0, 0, 1 };
 	vector<int> id1  =	{ 1, 0, 0, 0, 1 };
 	vector<int> id2  =	{ 1, 1, 1, 1, 1 };
 	vector<int> id3  =	{ 1, 2, 1, 1, 1 };
@@ -100,7 +100,7 @@ int main()
 	vector<int> id16 =  { 4, 2, 1, 0, 2 };
 	vector<int> id17 =  { 4, 2, 0, 0, 2 };
 	vector<int> id18 =  { 3, 1, 2, 1, 2 };
-	vector<int> id19 =  { 3, 1, 2, 2, 2 };*/
+	vector<int> id19 =  { 3, 1, 2, 2, 2 };
 
 
 	// create vector to hold all data
@@ -450,10 +450,10 @@ int main()
 			vector<int> expansionChain;
 
 			//if looking at the first registered expansion
-			if (dataX == 0)
-			{
+			//if (dataX == 0)
+			//{
 				expansionChain.push_back(dataIndex);
-			}
+			//}
 
 			// record the expansion index to determine which position should be checked in the chain
 			//changed dataIndex -> dataX; might need to be changed back
@@ -556,6 +556,24 @@ int main()
 	} // end expansion outer for loop
 
 
+	//counting number of cases per class. Currently only recognizes two classes
+	int class1Num = 0;
+	int class2Num = 0;
+	//determine the column index in the data which holds the class number (the last column in the data)
+	int columnCount = data.at(0).size() - 1;
+	//checks the last class column for every set (row of data) and increases either class1Num or class2Num depending on if the set is in class 1 or 2
+	for (int i = 0; i < data.size(); i++)
+	{
+		if (data.at(i).at(columnCount) == 1)
+		{
+			class1Num++;
+		}
+		else
+		{
+			class2Num++;
+		}
+	}
+
 	cout << "Total rules: " << rules.size() << endl;
 
 	// print results
@@ -579,11 +597,16 @@ int main()
 		// print the class the rule covers
 		cout << "Rule " << (i+1) << " covers class " << rules.at(i).classCovered << endl;
 
-		// num cases covered divided by the number of cases in the data
-		double coveragePercent = ((double) rules.at(i).coverageCounter / data.size() * 100);
 
 		cout << "Number of cases covered: " << rules.at(i).coverageCounter << endl;
-		cout << "Coverage of all cases: " << (coveragePercent) << "%" << endl;
+
+		int curClass = rules.at(i).classCovered == 1 ? class1Num : class2Num;
+		double classCoveragePercent = ((double)rules.at(i).coverageCounter / curClass * 100);
+		cout << "Coverage of class: " << classCoveragePercent << "%" << endl;
+
+		// num cases covered divided by the number of cases in the data
+		double allCaseCoveragePercent = ((double)rules.at(i).coverageCounter / data.size() * 100);
+		cout << "Coverage of all cases: " << (allCaseCoveragePercent) << "%" << endl;
 
 		// cout << "Number of class 1 cases covered: " << rules.at(i).classCovered << endl;
 		
