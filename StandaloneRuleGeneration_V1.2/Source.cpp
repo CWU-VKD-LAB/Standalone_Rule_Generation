@@ -37,26 +37,26 @@ int main()
 
 	// create vectors which hold the id values. Last value is class output
 	// Hard coded //
-	//vector<int> id0  =	{ 0, 0, 0, 0, 1 };
-	//vector<int> id1  =	{ 1, 0, 0, 0, 1 };
-	//vector<int> id2  =	{ 1, 1, 1, 1, 1 };
-	//vector<int> id3  =	{ 1, 2, 1, 1, 1 };
-	//vector<int> id4  =	{ 1, 3, 1, 1, 1 };
-	//vector<int> id5  =	{ 0, 0, 2, 2, 1 };
-	//vector<int> id6  =	{ 0, 0, 1, 2, 1 };
-	//vector<int> id7  =	{ 0, 0, 0, 2, 1 };
-	//vector<int> id8  =	{ 1, 2, 2, 0, 1 };
-	//vector<int> id9  =	{ 0, 2, 2, 0, 1 };
-	//vector<int> id10 =	{ 1, 2, 0, 1, 2 };
-	//vector<int> id11 =	{ 1, 1, 0, 1, 2 };
-	//vector<int> id12 =	{ 1, 0, 0, 1, 2 };
-	//vector<int> id13 =	{ 1, 1, 2, 2, 2 };
-	//vector<int> id14 =	{ 0, 1, 2, 2, 2 };
-	//vector<int> id15 =	{ 0, 2, 2, 0, 2 };
-	//vector<int> id16 =  { 0, 2, 1, 0, 2 };
-	//vector<int> id17 =  { 0, 2, 0, 0, 2 };
-	//vector<int> id18 =  { 1, 1, 2, 1, 2 };
-	//vector<int> id19 =  { 1, 1, 2, 2, 2 };
+	vector<int> id0  =	{ 0, 0, 0, 0, 1 };
+	vector<int> id1  =	{ 1, 0, 0, 0, 1 };
+	vector<int> id2  =	{ 1, 1, 1, 1, 1 };
+	vector<int> id3  =	{ 1, 2, 1, 1, 1 };
+	vector<int> id4  =	{ 1, 3, 1, 1, 1 };
+	vector<int> id5  =	{ 0, 0, 2, 2, 1 };
+	vector<int> id6  =	{ 0, 0, 1, 2, 1 };
+	vector<int> id7  =	{ 0, 0, 0, 2, 1 };
+	vector<int> id8  =	{ 1, 2, 2, 0, 1 };
+	vector<int> id9  =	{ 0, 2, 2, 0, 1 };
+	vector<int> id10 =	{ 1, 2, 0, 1, 2 };
+	vector<int> id11 =	{ 1, 1, 0, 1, 2 };
+	vector<int> id12 =	{ 1, 0, 0, 1, 2 };
+	vector<int> id13 =	{ 1, 1, 2, 2, 2 };
+	vector<int> id14 =	{ 0, 1, 2, 2, 2 };
+	vector<int> id15 =	{ 0, 2, 2, 0, 2 };
+	vector<int> id16 =  { 0, 2, 1, 0, 2 };
+	vector<int> id17 =  { 0, 2, 0, 0, 2 };
+	vector<int> id18 =  { 1, 1, 2, 1, 2 };
+	vector<int> id19 =  { 1, 1, 2, 2, 2 };
 
 
 	//vector<int> id0 =  { 1, 0, 0, 0, 1 };
@@ -81,7 +81,7 @@ int main()
 	//vector<int> id19 = { 3, 0, 0, 0, 2 };
 
 
-	vector<int> id0  =	{ 0, 0, 0, 0, 1 };
+	/*vector<int> id0  =	{ 0, 0, 0, 0, 1 };
 	vector<int> id1  =	{ 1, 0, 0, 0, 1 };
 	vector<int> id2  =	{ 1, 1, 1, 1, 1 };
 	vector<int> id3  =	{ 1, 2, 1, 1, 1 };
@@ -100,7 +100,7 @@ int main()
 	vector<int> id16 =  { 4, 2, 1, 0, 2 };
 	vector<int> id17 =  { 4, 2, 0, 0, 2 };
 	vector<int> id18 =  { 3, 1, 2, 1, 2 };
-	vector<int> id19 =  { 3, 1, 2, 2, 2 };
+	vector<int> id19 =  { 3, 1, 2, 2, 2 };*/
 
 
 	// create vector to hold all data
@@ -428,12 +428,13 @@ int main()
 	//			  Data 3 = {2, 1, 1, 1}
 	//			  Max for X1 = 2, min = 0
 	//			  Rule: x1 <= 2, x2 = 1, x3 = 1, x4 = 1
-	for (int dataX = 0; dataX < expandable.size(); dataX++)
+	for (int dataX = 0; dataX < expandable.size(); dataX++)//picks up index of the expandable vector
 	{
 		// get the first index of the expandable vector which is the data index that is being expanded upon
 		int dataIndex = expandable.at(dataX).at(0);
 
 		//will always only loop 1 time?
+		//going to look at the expansions for the vector
 		for (int expand = 1; expand < expandable.at(dataX).size(); expand++)
 		{
 			// create a boolean value to end the while loop if the expansion cannot be made into a rule
@@ -460,6 +461,9 @@ int main()
 			// add the expansionIndex to the rule
 			tempRule->expansionIndex = expansionIndexTemp;
 
+			//either loops only once or infinite times
+			//not recognizing the end
+			//going to loop through all of the expansions that can be expanded from the intitial expanded-from var
 			while (endExpansionRuleCheck == false)
 			{
 				// if the data on the expansion coordinate is not the minimum value, break out of the loop
@@ -485,12 +489,16 @@ int main()
 						if (expandable.at(i).at(0) == expandable.at(dataIndex).at(1))
 						{
 							// check if the next expansion can expand along the same index as the previous expansion
+							//will only ever loop once?
 							for (int j = 0; j < expansionIndexes.at(i).size(); j++)
 							{
 								// cout << "I am making it here " << j << endl;
 								// if the expansion can expand on the same index, is an upward expansion, and shares the same class, then it can be used 
-								if (expansionIndexes.at(i).at(j) == expansionIndexTemp && expansionFlags.at(i).at(j) == 1) // && data.at(expandable.at(i).at(j + 1)).at(data.at(i).size() - 1) == data.at(dataIndex).at(data.at(i).size() - 1))
+								//changed 1 to -1; might need to be changed bacl
+								if (expansionIndexes.at(i).at(j) == expansionIndexTemp && expansionFlags.at(i).at(j) == -1) // && data.at(expandable.at(i).at(j + 1)).at(data.at(i).size() - 1) == data.at(dataIndex).at(data.at(i).size() - 1))
 								{
+									cout << "im getting here\n";
+									//it never gets here. Lets find out why
 									dataIndex = expansionChain.at(expansionChain.size() - 1);
 
 									ruleExpansionFound = true;
@@ -499,11 +507,12 @@ int main()
 						}
 					}
 
-					// check if the rule expanded in testing
-					//if (ruleExpansionFound == false)
-					//{
+					//makes loop not infinite
+					//check if the rule expanded in testing
+					if (ruleExpansionFound == false)
+					{
 						endExpansionRuleCheck = true;
-					//}
+					}
 				}
 				cout << "I am looping" << endl;
 			} // end while loop
@@ -553,7 +562,7 @@ int main()
 		cout << "Total rules: " << rules.size() << endl;
 		cout << "Rule " << i + 1 << " : " << endl;
 
-		for (int dataPrint = 0; dataPrint < data.at(rules.at(i).ruleVals.at(rules.at(i).ruleVals.size() - 1)).size(); dataPrint++)
+		for (int dataPrint = 0; dataPrint < data.at(rules.at(i).ruleVals.at(rules.at(i).ruleVals.size() - 1)).size() - 1; dataPrint++)
 		{
 			if (dataPrint == rules.at(i).expansionIndex)
 			{
@@ -564,7 +573,7 @@ int main()
 				cout << "X" << (dataPrint + 1) << " = " << data.at(rules.at(i).ruleVals.at(rules.at(i).ruleVals.size() - 1)).at(dataPrint) << endl;
 			}
 		}
-		cout << "X" << (i + 1) << " = " << data.at(rules.at(i).ruleVals.at(rules.at(i).ruleVals.size() - 1)).at(rules.at(i).expansionIndex) << endl;
+		//cout << "X" << (i + 1) << " = " << data.at(rules.at(i).ruleVals.at(rules.at(i).ruleVals.size() - 1)).at(rules.at(i).expansionIndex) << endl;
 
 		// print the class the rule covers
 		cout << "Rule " << (i+1) << " covers class " << rules.at(i).classCovered << endl;
