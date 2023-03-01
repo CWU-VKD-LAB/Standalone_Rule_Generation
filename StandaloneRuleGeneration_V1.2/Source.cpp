@@ -83,24 +83,24 @@ int main()
 
 	vector<int> id0  =	{ 0, 0, 0, 0, 1 };
 	vector<int> id1  =	{ 1, 0, 0, 0, 1 };
-	vector<int> id2  =	{ 1, 1, 1, 1, 1 };
-	vector<int> id3  =	{ 1, 2, 1, 1, 1 };
-	vector<int> id4  =	{ 1, 3, 1, 1, 1 };
-	vector<int> id5  =	{ 0, 0, 2, 2, 1 };
-	vector<int> id6  =	{ 0, 0, 1, 2, 1 };
-	vector<int> id7  =	{ 0, 0, 0, 2, 1 };
-	vector<int> id8  =	{ 1, 2, 2, 0, 1 };
-	vector<int> id9  =	{ 2, 2, 2, 0, 1 };
-	vector<int> id10 =	{ 3, 2, 0, 1, 2 };
-	vector<int> id11 =	{ 3, 1, 0, 1, 2 };
-	vector<int> id12 =	{ 3, 0, 0, 1, 2 };
-	vector<int> id13 =	{ 3, 1, 2, 2, 2 };
-	vector<int> id14 =	{ 4, 1, 2, 2, 2 };
-	vector<int> id15 =	{ 3, 2, 2, 0, 2 };
-	vector<int> id16 =  { 4, 2, 1, 0, 2 };
-	vector<int> id17 =  { 4, 2, 0, 0, 2 };
-	vector<int> id18 =  { 3, 1, 2, 1, 2 };
-	vector<int> id19 =  { 3, 1, 2, 2, 2 };
+	vector<int> id2  =	{ 2, 0, 0, 0, 1 };
+	vector<int> id3  =	{ 3, 0, 0, 0, 1 };
+	vector<int> id4  =	{ 4, 0, 0, 0, 1 };
+	vector<int> id5  =	{ 5, 0, 0, 0, 1 };
+	vector<int> id6  =	{ 6, 0, 0, 0, 1 };
+	vector<int> id7  =	{ 7, 0, 0, 0, 1 };
+	vector<int> id8  =	{ 8, 0, 0, 0, 1 };
+	vector<int> id9  =	{ 9, 0, 0, 0, 1 };
+	vector<int> id10 =	{ 10, 0, 0, 1, 2 };
+	vector<int> id11 =	{ 11, 1, 0, 1, 2 };
+	vector<int> id12 =	{ 12, 0, 0, 1, 2 };
+	vector<int> id13 =	{ 13, 1, 2, 2, 2 };
+	vector<int> id14 =	{ 14, 1, 2, 2, 2 };
+	vector<int> id15 =	{ 13, 2, 2, 0, 2 };
+	vector<int> id16 =  { 14, 2, 1, 0, 2 };
+	vector<int> id17 =  { 14, 2, 0, 0, 2 };
+	vector<int> id18 =  { 13, 1, 2, 1, 2 };
+	vector<int> id19 =  { 13, 1, 2, 2, 2 };
 
 
 	// create vector to hold all data
@@ -197,7 +197,7 @@ int main()
 
 	// 2d vector to hold all of the expansion indexes
 	// the value will represent the index at which the expansion was found
-	vector<vector<int>> expansionIndexes;
+	vector<vector<int>> columnExpansionIndexes;
 
 	// compare the first case against all cases to find where the absolute value of all points subtracted is 1
 	// Ex: c1 = {0, 0, 1, 2} and c2 = {1, 0, 1, 2}
@@ -281,32 +281,35 @@ int main()
 			bool expansionFound = false;
 
 			// temporary vector to hold this comparisons expandable flags
-			vector<int> tempFlags;
+			vector<int> tempExpansionFlags;
 
 			// temporary vector to hold this comparisons expandable IDs
 			vector<int> tempId;
 
 			// temporary vector to hold the index of the expansion
-			vector<int> tempInd;
+			vector<int> tempColumnInd;
 
 			// the first value in the match vector is the id of the original compared data
 			if (match > 0)
 			{
 				// iterate over the matched dataID to determine if it can be expanded
-				for (int dataIndex = 0; dataIndex < (data.at(matches.at(match)).size() - 1); dataIndex++)
+				//changed dataIndex -> columnIndex
+				for (int columnIndex = 0; columnIndex < (data.at(matches.at(match)).size() - 1); columnIndex++)
 				{
 
 					// check if the match can be expanded upwards
-					if (expansionFound == false && comparisonCase.at(dataIndex) == (data.at(matches.at(match)).at(dataIndex) + 1) )
+					if (expansionFound == false && comparisonCase.at(columnIndex) == (data.at(matches.at(match)).at(columnIndex) + 1) )
 					{
 						// set the expansion found flag to true
 						expansionFound = true;
 
 						// set the expand flag to show it is an downward expansion
-						tempFlags.push_back(-1);
+						//changed tempFlags -> tempExpansionFlags
+						tempExpansionFlags.push_back(-1);
 
 						// record the expansion index
-						tempInd.push_back(dataIndex);
+						//change tempInd -> tempColumnInd
+						tempColumnInd.push_back(columnIndex);
 
 						/*
 						cout << "Downward Expansion Found in match #" << match << endl;
@@ -315,16 +318,16 @@ int main()
 						*/
 					}
 					// check if the match can be expanded downwards
-					else if (expansionFound == false && comparisonCase.at(dataIndex) == (data.at(matches.at(match)).at(dataIndex) - 1) )
+					else if (expansionFound == false && comparisonCase.at(columnIndex) == (data.at(matches.at(match)).at(columnIndex) - 1) )
 					{
 						// set the expansion found flag to true
 						expansionFound = true;
 
 						// set the expand flag to show it is an upward expansion
-						tempFlags.push_back(1);
+						tempExpansionFlags.push_back(1);
 
 						// record the expansion index
-						tempInd.push_back(dataIndex);
+						tempColumnInd.push_back(columnIndex);
 
 						/*
 						cout << "Upward Expansion Found in match #" << match << endl;
@@ -336,17 +339,17 @@ int main()
 					// Ex: comparison Case = {0, 1, 0 ,0}
 					// 	   match case = {1, 0, 0, 1}
 					// In the above example, the difference in the sums is an absolute value of 1, but there is more than one possible expansion
-					else if (expansionFound == true && comparisonCase.at(dataIndex) != (data.at(matches.at(match)).at(dataIndex)))
+					else if (expansionFound == true && comparisonCase.at(columnIndex) != (data.at(matches.at(match)).at(columnIndex)))
 					{
 						// remove the last flag pushed into the expansion flag vector
-						if (tempFlags.size() > 0)
+						if (tempExpansionFlags.size() > 0)
 						{
-							tempFlags.pop_back();
+							tempExpansionFlags.pop_back();
 						}
 
-						if (tempInd.size() > 0)
+						if (tempColumnInd.size() > 0)
 						{
-							tempInd.pop_back();
+							tempColumnInd.pop_back();
 						}
 
 						break;
@@ -354,12 +357,12 @@ int main()
 					// check if there is an expansion that is too large or too small
 					// Ex: ID1 (0, 0, 0, 1), ID2 (0, 0, 0, 3)
 					// Ex: ID1 (0, 0, 0, 3), ID2 (0, 0, 0, 1)
-					else if ((comparisonCase.at(dataIndex) > (data.at(matches.at(match)).at(dataIndex) + 1)) || (comparisonCase.at(dataIndex) < (data.at(matches.at(match)).at(dataIndex) - 1)))
+					else if ((comparisonCase.at(columnIndex) > (data.at(matches.at(match)).at(columnIndex) + 1)) || (comparisonCase.at(columnIndex) < (data.at(matches.at(match)).at(columnIndex) - 1)))
 					{
 						// clear the last flag pushed if there are any
-						if (tempFlags.size() > 0)
+						if (tempExpansionFlags.size() > 0)
 						{
-							tempFlags.pop_back();
+							tempExpansionFlags.pop_back();
 						}
 
 						break;
@@ -372,7 +375,7 @@ int main()
 				} 
 				// end dataIndex
 
-				if (expansionFound == true && tempFlags.size() > 0)
+				if (expansionFound == true && tempExpansionFlags.size() > 0)
 				{
 					// add the comparison ID to the expandable vector
 					tempId.push_back(matches.at(0));
@@ -384,10 +387,10 @@ int main()
 					expandable.push_back(tempId);
 
 					// add the expansion flags from the temporary flag
-					expansionFlags.push_back(tempFlags);
+					expansionFlags.push_back(tempExpansionFlags);
 
 					// add the expansion indexes from the temporary indexes
-					expansionIndexes.push_back(tempInd);
+					columnExpansionIndexes.push_back(tempColumnInd);
 				}
 			}
 		} // end matches
@@ -412,7 +415,7 @@ int main()
 			else
 			{
 				cout << "\tExpand " << i << ":" << " ID" << expandable.at(i).at(j) << endl;
-				cout << "\tExpand " << i << " Direction " << ": " << expansionFlags.at(i).at(j - 1) << " at index: " << expansionIndexes.at(i).at(j - 1) << endl;
+				cout << "\tExpand " << i << " Direction " << ": " << expansionFlags.at(i).at(j - 1) << " at index: " << columnExpansionIndexes.at(i).at(j - 1) << endl;
 			}
 		}
 	}
@@ -428,15 +431,15 @@ int main()
 	//			  Data 3 = {2, 1, 1, 1}
 	//			  Max for X1 = 2, min = 0
 	//			  Rule: x1 <= 2, x2 = 1, x3 = 1, x4 = 1
-	for (int dataX = 0; dataX < expandable.size(); dataX++)//picks up index of the expandable vector
+	for (int curExpansionIndex = 0; curExpansionIndex < expandable.size(); curExpansionIndex++)//picks up index of the expandable vector
 	{
 		// get the first index of the expandable vector which is the data index that is being expanded upon
 		// data index = the row of what is being expanded upon from the expansion of dataX. 
-		int dataIndex = expandable.at(dataX).at(0);
+		int curRowExpansionDataIndex = expandable.at(curExpansionIndex).at(0);
 
 		//will always only loop 1 time?
 		//going to look at the expansions for the vector
-		for (int expand = 1; expand < expandable.at(dataX).size(); expand++)
+		for (int expand = 1; expand < expandable.at(curExpansionIndex).size(); expand++)
 		{
 			// create a boolean value to end the while loop if the expansion cannot be made into a rule
 			bool endExpansionRuleCheck = false;
@@ -444,67 +447,72 @@ int main()
 			// create a new rule
 			tempRule = new rule;
 
-			tempRule->expansionDirection = -1;
+			tempRule->expansionDirection = 1;
 
 			// pushback the dataIndex to follow the chain of expansion
 			vector<int> expansionChain;
 
-			//if looking at the first registered expansion
-			//if (dataX == 0)
-			//{
-				expansionChain.push_back(dataIndex);
-			//}
+
+			expansionChain.push_back(curRowExpansionDataIndex);
 
 			// record the expansion index to determine which position should be checked in the chain
-			//changed dataIndex -> dataX; might need to be changed back
-			int expansionIndexTemp = expansionIndexes.at(dataX).at(0);
+			//changed curExpansionIndex -> columnExpansionIndexTemp; might need to be changed back
+			int curColumnExpansionDataIndex = columnExpansionIndexes.at(curExpansionIndex).at(0);
 
 			// add the expansionIndex to the rule
-			tempRule->expansionIndex = expansionIndexTemp;
+			tempRule->expansionIndex = curColumnExpansionDataIndex;
 
-			//either loops only once or infinite times
-			//not recognizing the end
+			//the ongoingExpansionIndex is what will be used inside of the for loop
+			//this way the curExpansionIndex can be properly used in further iterations of the for loop we are inside of
+			int ongoingExpansionIndex = curExpansionIndex;
 			//going to loop through all of the expansions that can be expanded from the intitial expanded-from var
 			while (endExpansionRuleCheck == false)
 			{
 				// if the data on the expansion coordinate is not the minimum value, break out of the loop
-				if (data.at(dataIndex).at(expansionIndexTemp) != coordinateMin.at(expansionIndexTemp) )
-				{
-					endExpansionRuleCheck = true;
-					break;
-				}
-				else
-				{
+				//if (data.at(curRowExpansionDataIndex).at(curColumnExpansionDataIndex) != coordinateMin.at(curColumnExpansionDataIndex) )
+				//{
+				//	endExpansionRuleCheck = true;
+				//	//break;
+				//}
+				/*else
+				{*/
 					// if the program makes it here, then the data is the minimum value of that coordinate
 					// this means that the expansion from this point can be a less than rule
 
 					// add the expansion to the chain
-					expansionChain.push_back(expandable.at(dataX).at(1));
+					expansionChain.push_back(expandable.at(ongoingExpansionIndex).at(1));
 
 					bool ruleExpansionFound = false;
+
 
 					// search if the expandable coordinate can be expanded itself
 					for (int i = 0; i < expandable.size(); i++)
 					{
 						// check if the expansion from the original coordinate has any expansions of its own
-						if (expandable.at(i).at(0) == expandable.at(dataIndex).at(1))
+						if (expandable.at(i).at(0) == expandable.at(ongoingExpansionIndex).at(1) //if the row matches
+							&& columnExpansionIndexes.at(i).at(0) == curColumnExpansionDataIndex //and if the column matches
+							&& expansionFlags.at(i).at(0) == 1 //and if the flag matches
+							&& data.at(expandable.at(i).at(1)).at(data.at(0).size() - 1) == data.at(expandable.at(ongoingExpansionIndex).at(1)).at(data.at(0).size() - 1))//and if the class matches
 						{
-							// check if the next expansion can expand along the same index as the previous expansion
-							//will only ever loop once?
-							for (int j = 0; j < expansionIndexes.at(i).size(); j++)
-							{
-								// cout << "I am making it here " << j << endl;
-								// if the expansion can expand on the same index, is an upward expansion, and shares the same class, then it can be used 
-								//changed 1 to -1; might need to be changed bacl
-								if (expansionIndexes.at(i).at(j) == expansionIndexTemp && expansionFlags.at(i).at(j) == -1) // && data.at(expandable.at(i).at(j + 1)).at(data.at(i).size() - 1) == data.at(dataIndex).at(data.at(i).size() - 1))
-								{
+							//// check if the next expansion can expand along the same index as the previous expansion
+							////will only ever loop once?
+							//for (int j = 0; j < columnExpansionIndexes.at(i).size(); j++)
+							//{
+							//	// cout << "I am making it here " << j << endl;
+							//	// if the expansion can expand on the same index, is an upward expansion, and shares the same class, then it can be used 
+							//	if (columnExpansionIndexes.at(i).at(j) == curColumnExpansionDataIndex && expansionFlags.at(i).at(j) == -1) // && data.at(expandable.at(i).at(j + 1)).at(data.at(i).size() - 1) == data.at(dataIndex).at(data.at(i).size() - 1))
+							//	{
 									cout << "im getting here\n";
-									//it never gets here. Lets find out why
-									dataIndex = expansionChain.at(expansionChain.size() - 1);
-
+									curRowExpansionDataIndex = expansionChain.at(expansionChain.size() - 1);
 									ruleExpansionFound = true;
-								}
-							}
+									ongoingExpansionIndex = i;
+									break;
+							/*	}
+							}*/
+						}
+						else
+						{
+							ruleExpansionFound = false;
 						}
 					}
 
@@ -514,7 +522,7 @@ int main()
 					{
 						endExpansionRuleCheck = true;
 					}
-				}
+				//}
 				cout << "I am looping" << endl;
 			} // end while loop
 
@@ -592,11 +600,9 @@ int main()
 				cout << "X" << (dataPrint + 1) << " = " << data.at(rules.at(i).ruleVals.at(rules.at(i).ruleVals.size() - 1)).at(dataPrint) << endl;
 			}
 		}
-		//cout << "X" << (i + 1) << " = " << data.at(rules.at(i).ruleVals.at(rules.at(i).ruleVals.size() - 1)).at(rules.at(i).expansionIndex) << endl;
 
 		// print the class the rule covers
 		cout << "Rule " << (i+1) << " covers class " << rules.at(i).classCovered << endl;
-
 
 		cout << "Number of cases covered: " << rules.at(i).coverageCounter << endl;
 
