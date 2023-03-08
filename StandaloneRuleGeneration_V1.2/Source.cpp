@@ -25,6 +25,15 @@ void clearRule(rule& usedRule)
 	usedRule.expansionIndex = -1;
 }
 
+struct expansion
+{
+	int rowExpandedfrom;
+	vector<int> rowsExpandedTo;
+	vector<int> expansionDirection;
+	int columnIndex;
+	bool alreadyInARule;
+};
+
 // drive function
 int main()
 {
@@ -222,7 +231,7 @@ int main()
 
 			// check if the absolute value of sum is 1
 			//changed to == -1; might need to be changed back to 
-			if (sum == -1)
+			if (abs(sum) == 1)
 			{
 				//cout << "Match " << dataXIndex << " pushed to vector" << endl;
 				matches.push_back(dataXIndex);
@@ -434,6 +443,11 @@ int main()
 		//the ongoingExpansionIndex is what will be used inside of the for loop
 		//this way the curExpansionIndex can be properly used in further iterations of the for loop we are inside of
 		int ongoingExpansionIndex = curExpansionIndex;
+		//here's the plan for eliminating non-encompasing rules. Choose some index--look through it's downward expansions
+		//until there are none and look through it's upward expansions until there are none. Those max and minimum values
+		//are what will be on either side of the attribute. This will require some changing in the code above. 
+
+
 		//going to loop through all of the expansions that can be expanded from the intitial expanded-from var
 		while (endExpansionRuleCheck == false)
 		{
@@ -459,7 +473,7 @@ int main()
 				}
 				else
 				{
-					//if no rule expansion is found through out any of the data, then the next base expansion will be considered. 
+					//if no rule expansion is found throughout any of the data, then the next base expansion will be considered. 
 					ruleExpansionFound = false;
 				}
 			}
