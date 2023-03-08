@@ -454,10 +454,12 @@ int main()
 					curRowExpansionDataIndex = expansionChain.at(expansionChain.size() - 1);
 					ruleExpansionFound = true;
 					ongoingExpansionIndex = i;
+					//if an expansion is found, then we will consider expansions from that expansion in the next loop
 					break;
 				}
 				else
 				{
+					//if no rule expansion is found through out any of the data, then the next base expansion will be considered. 
 					ruleExpansionFound = false;
 				}
 			}
