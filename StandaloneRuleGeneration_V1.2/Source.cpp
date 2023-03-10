@@ -1,15 +1,19 @@
 // Standalone rule generation program
 #include<stdio.h>
+#include <stdlib.h>
 #include<vector>
 #include<iostream>
 #include<cmath>
+#include<unordered_map>
+#include<list>
 
 // namespace for ease
 using namespace std;
 
 // create structure to hold rule data
 struct rule {
-	vector<int> ruleVals;
+	int ruleValFront = 0;
+	int ruleValBack = 0;
 	int expansionDirection = 0; // -1 = less than rule, 1 = greater than rule
 	int coverageCounter = 0;
 	int classCovered = -1; // -1 is default value, but could potentially match a data's class.
@@ -18,20 +22,21 @@ struct rule {
 
 void clearRule(rule& usedRule)
 {
-	usedRule.ruleVals.clear();
+	usedRule.ruleValFront = 0;
+	usedRule.ruleValBack = 0;
 	usedRule.expansionDirection = 0;
 	usedRule.coverageCounter = 0;
 	usedRule.classCovered = -1;
 	usedRule.expansionIndex = -1;
 }
 
-struct expansion
+struct Expansion
 {
 	int rowExpandedfrom;
-	vector<int> rowsExpandedTo;
-	vector<int> expansionDirection;
+	list<int> expansionIndexExpandedTo;
+	list<int> expansionDirection;
 	int columnIndex;
-	bool alreadyInARule;
+	bool alreadyInARule = false;
 };
 
 // drive function
@@ -179,6 +184,8 @@ int main()
 	// 2d vector to hold all of the expansion indexes
 	// the value will represent the index at which the expansion was found
 	vector<vector<int>> columnExpansionIndexes;
+
+	unordered_map<int, Expansion> expansions;
 
 	// compare the first case against all cases to find where the absolute value of all points subtracted is 1
 	// Ex: c1 = {0, 0, 1, 2} and c2 = {1, 0, 1, 2}
@@ -361,12 +368,31 @@ int main()
 				{
 					// add the comparison ID to the expandable vector
 					tempId.push_back(matches.at(0));
-
+		
 					// add the match which can be expanded to to the expandable vector
 					tempId.push_back(matches.at(match));
 
 					// push the entire temporary vector into the expandable vector
 					expandable.push_back(tempId);
+					Expansion exp;
+					int expansionsIndex = matches.at(0) + (tempColumnInd.at(0) * data.at(matches.at(0)).size() - 1);
+					if (expansions.find(expansionsIndex) == expansions.end())
+					{
+						expansions[expansionsIndex] = exp;
+					}
+					expansions[expansionsIndex].rowExpandedfrom = matches.at(0);
+					expansions[expansionsIndex].columnIndex = tempColumnInd.at(0);
+					if (tempExpansionDirection.at(0) == 1)
+					{
+						expansions[expansionsIndex].expansionDirection.push_front(tempExpansionDirection.at(0));
+						expansions[expansionsIndex].expansionIndexExpandedTo.push_front(matches.at(match) + (tempColumnInd.at(0) * data.at(matches.at(0)).size() - 1));
+					}
+					else
+					{
+						expansions[expansionsIndex].expansionDirection.push_back(tempExpansionDirection.at(0));
+						expansions[expansionsIndex].expansionIndexExpandedTo.push_back(matches.at(match) + (tempColumnInd.at(0) * data.at(matches.at(0)).size() - 1));
+					}
+					//cout << expansions.size();
 
 					// add the expansion flags from the temporary flag
 					expansionDirections.push_back(tempExpansionDirection);
@@ -413,6 +439,106 @@ int main()
 	//			  Data 3 = {2, 1, 1, 1}
 	//			  Max for X1 = 2, min = 0
 	//			  Rule: x1 <= 2, x2 = 1, x3 = 1, x4 = 1
+
+	for (auto it : expansions)//picks up index of the expandable vector
+	{
+		Expansion curExpansion = it.second;
+		// get the first index of the expandable vector which is the data index that is being expanded upon
+		// data index = the row of what is being expanded upon from the expansion of dataX. 
+		list<int> expansionChain;
+		expansionChain.push_back(curExpansion.rowExpandedfrom);
+		//expansions[curExpansionIndex].alreadyInARule = true;
+
+		// create a boolean value to end the while loop if the expansion cannot be made into a rule
+		bool endExpansionRuleCheck = false;
+
+
+		tempRule = new rule;
+		tempRule->expansionDirection = 1;
+		// add the expansionIndex to the rule
+		tempRule->expansionIndex = curExpansion.columnIndex;
+
+		//the ongoingExpansionIndex is what will be used inside of the for loop
+		//this way the curExpansionIndex can be properly used in further iterations of the for loop we are inside of
+		//here's the plan for eliminating non-encompasing rules. Choose some index--look through it's downward expansions
+		//until there are none and look through it's upward expansions until there are none. Those max and minimum values
+		//are what will be on either side of the attribute. This will require some changing in the code above. 
+
+
+		//going to loop through all of the expansions that can be expanded from the intitial expanded-from var
+		while (endExpansionRuleCheck == false)
+		{
+			bool noMoreUpExpansions = false;
+			bool noMoreDownExpansions = false;
+			int currentExpansionIndexUp = expansionChain.front() + (curExpansion.columnIndex * data.at(expansionChain.front()).size() - 1);
+			int currentExpansionIndexDown = expansionChain.back() + (curExpansion.columnIndex * data.at(expansionChain.front()).size() - 1);
+			int nextExpansionIndexUp = expansions[currentExpansionIndexUp].expansionIndexExpandedTo.front();
+			int nextExpansionIndexDown = expansions[currentExpansionIndexDown].expansionIndexExpandedTo.back();
+		
+			//list<int> tempChain;
+			//plan: make a temp chain. Then push that chain onto the main chain. This way the second if-statement is still good in using the main chain. 
+			if (expansions[currentExpansionIndexUp].expansionDirection.front() == 1 && expansions[nextExpansionIndexUp].alreadyInARule == false)
+			{
+				expansionChain.push_front(expansions[nextExpansionIndexUp].rowExpandedfrom);
+			}
+			else
+			{
+				noMoreUpExpansions = true;
+			}
+
+	
+			if (expansions[currentExpansionIndexDown].expansionDirection.back() == -1 && (expansions[nextExpansionIndexDown].alreadyInARule == false ))
+			{
+				expansionChain.push_back(expansions[nextExpansionIndexDown].rowExpandedfrom);
+			}
+			else
+			{
+				noMoreDownExpansions = true;
+			}
+
+			expansions[currentExpansionIndexUp].alreadyInARule = true;
+			expansions[currentExpansionIndexDown].alreadyInARule = true;
+
+			if (noMoreDownExpansions && noMoreUpExpansions)
+			{
+				endExpansionRuleCheck = true;
+			}
+		} // end while loop
+
+		// determine if a rule has been generated
+		if (expansionChain.size() > 1)
+		{
+			// add the data to the temporary rule so that it can be added to the rule vector
+			// copy the coordinates into the ruleVals vector
+
+			tempRule->ruleValFront = expansionChain.front();
+			tempRule->ruleValBack = expansionChain.back();
+
+
+			// calculate coverage of the rule
+			tempRule->coverageCounter = expansionChain.size();
+
+			// put the class in the rule
+			tempRule->classCovered = data.at(tempRule->ruleValFront).at(data.at(tempRule->ruleValFront).size() - 1);
+
+			// put the tempRule into the rule vector
+			rules.push_back(*tempRule);
+
+			// clear the tempRule so it can be used again
+			clearRule(*tempRule);
+
+			// clear the expansionChain so it can be used again
+			expansionChain.clear();
+		}
+		else
+		{
+			// if the expansion chain vector is smaller 2, there is no possible less than rule
+			// clear the expansion Chain vector
+			expansionChain.clear();
+		}
+	} // end expansion outer for loop
+
+	/*
 	for (int curExpansionIndex = 0; curExpansionIndex < expandable.size(); curExpansionIndex++)//picks up index of the expandable vector
 	{
 		// get the first index of the expandable vector which is the data index that is being expanded upon
@@ -516,6 +642,7 @@ int main()
 			expansionChain.clear();
 		}
 	} // end expansion outer for loop
+	*/
 
 
 	//counting number of cases per class. Currently only recognizes two classes
@@ -543,19 +670,19 @@ int main()
 	{
 		cout << "Rule " << i + 1 << " : " << endl;
 
-		for (int dataPrint = 0; dataPrint < data.at(rules.at(i).ruleVals.at(rules.at(i).ruleVals.size() - 1)).size() - 1; dataPrint++)
+		for (int dataPrint = 0; dataPrint < data.at(0).size() - 1; dataPrint++)
 		{
 			if (dataPrint == rules.at(i).expansionIndex && rules.at(i).expansionDirection == 1)
 			{
-				cout << data.at(rules.at(i).ruleVals.at(0)).at(dataPrint) << " <= X" << (dataPrint + 1) << " <= " << data.at(rules.at(i).ruleVals.at(rules.at(i).ruleVals.size() - 1)).at(dataPrint) << endl;
+				cout << data.at(rules.at(i).ruleValBack).at(dataPrint) << " <= X" << (dataPrint + 1) << " <= " << data.at(rules.at(i).ruleValFront).at(dataPrint) << endl;
 			}
 			else if (dataPrint == rules.at(i).expansionIndex && rules.at(i).expansionDirection == -1)
 			{
-				cout << data.at(rules.at(i).ruleVals.at(0)).at(dataPrint) << " >= X" << (dataPrint + 1) << " >= " << data.at(rules.at(i).ruleVals.at(rules.at(i).ruleVals.size() - 1)).at(dataPrint) << endl;
+				cout << data.at(rules.at(i).ruleValBack).at(dataPrint) << " >= X" << (dataPrint + 1) << " >= " << data.at(rules.at(i).ruleValFront).at(dataPrint) << endl;
 			}
 			else
 			{
-				cout << "X" << (dataPrint + 1) << " = " << data.at(rules.at(i).ruleVals.at(rules.at(i).ruleVals.size() - 1)).at(dataPrint) << endl;
+				cout << "X" << (dataPrint + 1) << " = " << data.at(rules.at(i).ruleValFront).at(dataPrint) << endl;
 			}
 		}
 
