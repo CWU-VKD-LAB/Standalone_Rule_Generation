@@ -1,17 +1,113 @@
 ﻿  Source.cpp
-C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(397,101): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(416,148): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(734,14): warning C4101: 'found': unreferenced local variable
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(1030,31): warning C4244: '+=': conversion from '_Ty' to 'int', possible loss of data
           with
+          [
+              _Ty=double
+          ]
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(1084,64): warning C4244: 'argument': conversion from '_Ty' to 'const unsigned __int64', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(1088,90): warning C4244: 'argument': conversion from '_Ty' to 'const unsigned __int64', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(1108,95): warning C4244: 'argument': conversion from '_Ty' to 'const unsigned __int64', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(1129,94): warning C4244: 'argument': conversion from '_Ty' to 'const unsigned __int64', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(1147,68): warning C4244: 'argument': conversion from '_Ty' to 'const unsigned __int64', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(1147,155): warning C4244: 'argument': conversion from '_Ty' to 'const unsigned __int64', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(1177,85): warning C4244: 'argument': conversion from '_Ty' to 'const unsigned __int64', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(1177,26): warning C4244: 'initializing': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(1186,62): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(1187,64): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(1195,90): warning C4244: 'argument': conversion from '_Ty' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+          and
           [
               _Ty=int
           ]
-C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(421,147): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(1196,132): warning C4244: 'argument': conversion from '_Ty' to 'const unsigned __int64', possible loss of data
           with
+          [
+              _Ty=double
+          ]
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(1196,89): warning C4244: 'argument': conversion from '_Ty' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+          and
           [
               _Ty=int
           ]
-C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(497,130): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(498,130): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(555,53): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(581,41): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(1200,89): warning C4244: 'argument': conversion from '_Ty' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+          and
+          [
+              _Ty=int
+          ]
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(1201,131): warning C4244: 'argument': conversion from '_Ty' to 'const unsigned __int64', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(1201,88): warning C4244: 'argument': conversion from '_Ty' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+          and
+          [
+              _Ty=int
+          ]
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(1277,130): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(1278,130): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(1335,53): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(1338,63): warning C4244: '=': conversion from '_Ty' to 'int', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(1361,41): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   StandaloneRuleGeneration_V1.2.vcxproj -> C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\x64\Debug\StandaloneRuleGeneration_V1.2.exe
