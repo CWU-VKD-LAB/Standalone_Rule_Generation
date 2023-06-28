@@ -1,17 +1,14 @@
 ﻿  Source.cpp
-C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(397,101): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(416,148): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(302,101): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(327,148): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
           with
           [
               _Ty=int
           ]
-C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(421,147): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(332,147): warning C4267: 'argument': conversion from 'size_t' to '_Ty', possible loss of data
           with
           [
               _Ty=int
           ]
-C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(490,130): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(491,130): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(536,53): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(562,41): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\StandaloneRuleGeneration_V1.2\Source.cpp(508,41): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   StandaloneRuleGeneration_V1.2.vcxproj -> C:\Users\infer\Desktop\Github2\Main\Standalone_Rule_Generation\x64\Debug\StandaloneRuleGeneration_V1.2.exe

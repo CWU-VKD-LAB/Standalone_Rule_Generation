@@ -6,6 +6,10 @@
 #include<cmath>
 #include<unordered_map>
 #include<list>
+#include <fstream>
+#include <sstream>
+#include <algorithm>
+#include <set>
 
 // namespace for ease
 using namespace std;
@@ -44,158 +48,60 @@ struct Expansion
 	int columnIndex;
 	//if the current expansion is already in a rule, then this should be checked true. By default, expansions are not part of any rule. 
 	bool alreadyInARule = false;
+	//this will be used later on to count how many cases are covered
+	int numberOfSameRow = 1;
 };
+
+std::vector<std::vector<int>> readCSV(std::string filename) {
+	std::vector<std::vector<int>> data;
+	std::ifstream file(filename);
+
+	if (file.is_open()) {
+		std::string line;
+		// Skip the header line
+		std::getline(file, line);
+
+		while (std::getline(file, line)) {
+			std::vector<int> row;
+			std::stringstream ss(line);
+			std::string value;
+
+			// Skip the ID column
+			std::getline(ss, value, ',');
+
+			while (std::getline(ss, value, ',')) {
+				row.push_back(std::stoi(value));
+			}
+
+			//row.erase(row.begin());
+			data.push_back(row);
+		}
+
+		file.close();
+	}
+
+	return data;
+}
 
 // drive function
 int main()
 {
-	// create vectors which hold the cordinate values
-	// Hard coded //
-	vector<int> x1 = { 0, 1 }; //2
-	vector<int> x2 = { 0, 1, 2, 3 }; // 4
-	vector<int> x3 = { 0, 1, 2 }; // 3
-	vector<int> x4 = { 0, 1, 2 }; // 3
+	/*vector<vector<double>> data;
+	data = getArrayFromCSV("C:\\Users\\infer\\Desktop\\Github2\\Boris\\SPC-3D\\Assets\\FileData\\IrisBackUp.data");*/
+	vector<vector<int>> data = readCSV("C:\\Users\\infer\\Desktop\\Practice-Software-main\\Practice-Software-main\\VisCanvas2.0\\WisconsinBreastCancerData.csv");
 
-	// create vectors which hold the id values. Last value is class output
-	// Hard coded //
-	//before using, must remove duplicates
-	/*vector<int> id0  =	{ 0, 0, 0, 0, 1 };
-	vector<int> id1  =	{ 1, 0, 0, 0, 1 };
-	vector<int> id2  =	{ 1, 1, 1, 1, 1 };
-	vector<int> id3  =	{ 1, 2, 1, 1, 1 };
-	vector<int> id4  =	{ 1, 3, 1, 1, 1 };
-	vector<int> id5  =	{ 0, 0, 2, 2, 1 };
-	vector<int> id6  =	{ 0, 0, 1, 2, 1 };
-	vector<int> id7  =	{ 0, 0, 0, 2, 1 };
-	vector<int> id8  =	{ 1, 2, 2, 0, 1 };
-	vector<int> id9  =	{ 0, 2, 2, 0, 1 };
-	vector<int> id10 =	{ 1, 2, 0, 1, 2 };
-	vector<int> id11 =	{ 1, 1, 0, 1, 2 };
-	vector<int> id12 =	{ 1, 0, 0, 1, 2 };
-	vector<int> id13 =	{ 1, 1, 2, 2, 2 };
-	vector<int> id14 =	{ 0, 1, 2, 2, 2 };
-	vector<int> id15 =	{ 0, 2, 2, 0, 2 };
-	vector<int> id16 =  { 0, 2, 1, 0, 2 };
-	vector<int> id17 =  { 0, 2, 0, 0, 2 };
-	vector<int> id18 =  { 1, 1, 2, 1, 2 };
-	vector<int> id19 =  { 1, 1, 2, 2, 2 };*/
+	std::sort(data.begin(), data.end());
 
-	//before using, must remove duplicates
-	/*vector<int> id0 =  { 1, 0, 0, 0, 1 };
-	vector<int> id1 =  { 2, 0, 0, 0, 1 };
-	vector<int> id2 =  { 1, 0, 0, 0, 1 };
-	vector<int> id3 =  { 2, 0, 0, 0, 1 };
-	vector<int> id4 =  { 1, 0, 0, 0, 1 };
-	vector<int> id5 =  { 0, 0, 0, 0, 1 };
-	vector<int> id6 =  { 0, 0, 0, 0, 1 };
-	vector<int> id7 =  { 0, 0, 0, 0, 1 };
-	vector<int> id8 =  { 0, 0, 0, 0, 1 };
-	vector<int> id9 =  { 0, 0, 0, 0, 1 };
-	vector<int> id10 = { 3, 0, 0, 0, 2 };
-	vector<int> id11 = { 3, 0, 0, 0, 2 };
-	vector<int> id12 = { 3, 0, 0, 0, 2 };
-	vector<int> id13 = { 3, 0, 0, 0, 2 };
-	vector<int> id14 = { 3, 0, 0, 0, 2 };
-	vector<int> id15 = { 3, 0, 0, 0, 2 };
-	vector<int> id16 = { 3, 0, 0, 0, 2 };
-	vector<int> id17 = { 3, 0, 0, 0, 2 };
-	vector<int> id18 = { 3, 0, 0, 0, 2 };
-	vector<int> id19 = { 3, 0, 0, 0, 2 };*/
+	// Remove consecutive duplicates
+	auto last = std::unique(data.begin(), data.end());
+	data.erase(last, data.end());
 
-	//no duplicates allowed
-	//vector<int> id0  =	{ 4, 0, 0, 0, 1 };
-	//vector<int> id1  =	{ 5, 0, 0, 0, 1 };
-	//vector<int> id2  =	{ 3, 0, 0, 0, 1 };
-	//vector<int> id3  =	{ 6, 0, 0, 0, 1 };
-	//vector<int> id4  =	{ 9, 0, 0, 0, 1 };
-	//vector<int> id5  =	{ 1, 0, 0, 0, 1 };
-	//vector<int> id6  =	{ 2, 0, 0, 0, 1 };
-	//vector<int> id7  =	{ 7, 0, 0, 0, 1 };
-	//vector<int> id8  =	{ 0, 0, 0, 0, 1 };
-	//vector<int> id9  =	{ 8, 0, 0, 0, 1 };
-	//vector<int> id10 =	{ 10, 0, 0, 1, 2 };
-	//vector<int> id11 =	{ 11, 1, 0, 1, 2 };
-	//vector<int> id12 =	{ 12, 0, 0, 1, 2 };
-	//vector<int> id13 =	{ 13, 1, 2, 2, 2 };
-	//vector<int> id14 =	{ 14, 1, 2, 2, 2 };
-	//vector<int> id15 =	{ 13, 2, 2, 0, 2 };
-	//vector<int> id16 =  { 14, 2, 1, 0, 2 };
-	//vector<int> id17 =  { 14, 2, 0, 0, 2 };
-	//vector<int> id18 =  { 13, 1, 2, 1, 2 };
-	//vector<int> id19 =  { 13, 2, 2, 2, 2 };
+	// Create a set of vectors to store unique vectors
+	std::set<std::vector<int>> uniqueVectors(data.begin(), data.end());
 
-	vector<int> id0 = { 4, 0, 0, 0, 1 };
-	vector<int> id1 = { 5, 0, 0, 0, 1 };
-	vector<int> id2 = { 3, 0, 0, 0, 1 };
-	vector<int> id3 = { 6, 0, 0, 0, 1 };
-	vector<int> id4 = { 9, 0, 0, 0, 1 };
-	vector<int> id5 = { 1, 0, 0, 0, 1 };
-	vector<int> id6 = { 2, 0, 0, 0, 1 };
-	vector<int> id7 = { 7, 0, 0, 0, 1 };
-	vector<int> id8 = { 0, 0, 0, 0, 1 };
-	vector<int> id9 = { 8, 0, 0, 0, 1 };
-	vector<int> id10 = { 10, 0, 0, 0, 2 };
-	vector<int> id11 = { 11, 0, 0, 0, 2 };
-	vector<int> id12 = { 12, 0, 0, 0, 2 };
-	vector<int> id13 = { 13, 0, 0, 0, 2 };
-	vector<int> id14 = { 14, 0, 0, 0, 2 };
-	vector<int> id15 = { 15, 0, 0, 0, 2 };
-	vector<int> id16 = { 16, 0, 0, 0, 2 };
-	vector<int> id17 = { 100, 0, 0, 0, 2 };
-	vector<int> id18 = { 101, 0, 0, 0, 2 };
-	vector<int> id19 = { 102, 0, 0, 0, 2 };
-
-
-	// create vector to hold all data
-	vector<vector<int>> data;
-
-	// put data into data vector
-	data.push_back(id0 );
-	data.push_back(id1 );
-	data.push_back(id2 );
-	data.push_back(id3 );
-	data.push_back(id4 );
-	data.push_back(id5 );
-	data.push_back(id6 );
-	data.push_back(id7 );
-	data.push_back(id8 );
-	data.push_back(id9 );
-	data.push_back(id10);
-	data.push_back(id11);
-	data.push_back(id12);
-	data.push_back(id13);
-	data.push_back(id14);
-	data.push_back(id15);
-	data.push_back(id16);
-	data.push_back(id17);
-	data.push_back(id18);
-	data.push_back(id19);
-
-
-	//idea--sort the rows off of the current attribute being tested for matches using count sort. Than find expansions. 
-	// find the minimum and maximum for each coordinate/attribute
-	// not currently needed
-	//vector<int> coordinateMax;
-	//vector<int> coordinateMin;
-
-	//for (int dataColumn = 0; dataColumn < (data.at(0).size() - 1); dataColumn++)
-	//{
-	//	coordinateMax.push_back(data.at(0).at(dataColumn));
-	//	coordinateMin.push_back(data.at(0).at(dataColumn));
-
-	//	for (int dataRow = 0; dataRow < data.size(); dataRow++)
-	//	{
-	//		if (data.at(dataRow).at(dataColumn) > coordinateMax.at(dataColumn))
-	//		{
-	//			coordinateMax.at(dataColumn) = data.at(dataRow).at(dataColumn);
-	//		}
-	//		else if(data.at(dataRow).at(dataColumn) < coordinateMin.at(dataColumn))
-	//		{
-	//			coordinateMin.at(dataColumn) = data.at(dataRow).at(dataColumn);
-	//		}
-	//	}
-	//}
-
+	// Clear the original vector and insert the unique vectors
+	data.clear();
+	data.insert(data.end(), uniqueVectors.begin(), uniqueVectors.end());
 
 	// create vector of rules generated
 	vector<rule> rules;
@@ -280,7 +186,6 @@ int main()
 		*/
 
 		// check if the matches can be expanded
-		//=====NOTE: THIS DOES NOT CURRENTLY WORK=====//
 		for (int match = 0; match < matches.size(); match++)
 		{
 			// boolean variable to check if an expandable attribute has already been found
@@ -402,12 +307,18 @@ int main()
 						//create one
 						expansions[expansionsIndex] = exp;
 					}
+					//if there is one that already exists, then we just want make note of that and not redo any work. This will be useful data when we count the number of cases covered
+					else
+					{
+						expansions[expansionsIndex].numberOfSameRow++;
+						continue;
+					}
 					//fill the rowExpandedFrom and the columnIndex for the individual expansion
 					expansions[expansionsIndex].rowExpandedfrom = matches.at(0);
 					expansions[expansionsIndex].columnIndex = tempColumnInd.at(0);
 
 					//if the expansionDirection of match is upwards, then the expansion and direction should 
-					// go the front of expansionIndexExpandedTo and expansionDirection within expansions. 
+					// go the front of "expansionIndexExpandedTo" and "expansionDirection" within expansions. 
 					// Otherwise, both will go to the back. 
 					//this is how the data is expected to be organized for later on down the road. 
 					if (tempExpansionDirection.at(0) == 1)
@@ -434,21 +345,21 @@ int main()
 	//cout << "\n";
 
 	//// print the expansions to ensure it is working
-	//for (int i = 0; i < expandable.size(); i++)
-	//{
-	//	for (int j = 0; j < expandable.at(i).size(); j++)
-	//	{
-	//		if (j == 0)
-	//		{
-	//			cout << "ID" << expandable.at(i).at(j) << " can expand to: " << endl;
-	//		}
-	//		else
-	//		{
-	//			cout << "\tExpand " << i << ":" << " ID" << expandable.at(i).at(j) << endl;
-	//			cout << "\tExpand " << i << " Direction " << ": " << expansionFlags.at(i).at(j - 1) << " at index: " << columnExpansionIndexes.at(i).at(j - 1) << endl;
-	//		}
-	//	}
-	//}
+	/*for (int i = 0; i < expandable.size(); i++)
+	{
+		for (int j = 0; j < expandable.at(i).size(); j++)
+		{
+			if (j == 0)
+			{
+				cout << "ID" << expandable.at(i).at(j) << " can expand to: " << endl;
+			}
+			else
+			{
+				cout << "\tExpand " << i << ":" << " ID" << expandable.at(i).at(j) << endl;
+				cout << "\tExpand " << i << " Direction " << ": " << expansionFlags.at(i).at(j - 1) << " at index: " << columnExpansionIndexes.at(i).at(j - 1) << endl;
+			}
+		}
+	}*/
 
 	//cout << "\n";
 
@@ -476,9 +387,14 @@ int main()
 		Expansion curExpansion = it.second;
 
 		//expansionChain will hold the minimum and maximum expansions
-		list<int> expansionChain;
-		expansionChain.push_back(curExpansion.rowExpandedfrom);
+		list<int> expansionChainRow;
+		expansionChainRow.push_back(curExpansion.rowExpandedfrom);
 
+		list<int> expansionChainCasesCovered;
+		expansionChainRow.push_back(curExpansion.numberOfSameRow);
+
+		list<int> expansionIndexChain;
+		expansionIndexChain.push_back(it.first);
 
 		tempRule = new rule;
 		tempRule->expansionIndex = curExpansion.columnIndex;
@@ -489,13 +405,14 @@ int main()
 		//going to loop through all of the expansions that can be expanded from the intitial curExpansion
 		while (endExpansionRuleCheck == false)
 		{
-			//if both bools are true, as seen in the bottom if statement, then the while loop ceases and goes onto the next expansion. 
+			//if both bools are true, as seen in the bottom if statement, then the while loop stops and goes onto the next expansion. 
 			bool noMoreUpExpansions = false;
 			bool noMoreDownExpansions = false;
 
 			//the index within expansions--uses rowDominantForm
-			int currentExpansionIndexUp = expansionChain.front() + (curExpansion.columnIndex * data.at(expansionChain.front()).size() - 1);
-			int currentExpansionIndexDown = expansionChain.back() + (curExpansion.columnIndex * data.at(expansionChain.back()).size() - 1);
+			//here is the issue--the currentExpansionIndexDown seems to be calling on an expansion which doesn't exist.
+			int currentExpansionIndexUp = expansionIndexChain.front();
+			int currentExpansionIndexDown = expansionIndexChain.back();// +(curExpansion.columnIndex * data.at(expansionChain.back()).size() - 1);
 			
 			//the index within expansions of the next expansion--uses rowDominantForm
 			int nextExpansionIndexUp = expansions[currentExpansionIndexUp].expansionIndexExpandedTo.front();
@@ -505,7 +422,10 @@ int main()
 			//then push it to the front of the expansion chain for the next loop
 			if (expansions[currentExpansionIndexUp].expansionDirection.front() == 1 && expansions[nextExpansionIndexUp].alreadyInARule == false)
 			{
-				expansionChain.push_front(expansions[nextExpansionIndexUp].rowExpandedfrom);
+				expansionChainRow.push_front(expansions[nextExpansionIndexUp].rowExpandedfrom);
+				expansionIndexChain.push_front(nextExpansionIndexUp);
+				expansionChainCasesCovered.push_front(expansions[nextExpansionIndexUp].numberOfSameRow);//this could be in a vector or something, and probably outside of this if-statement, but 
+																										//for the sake of similarity I have chosen to not do that. 
 			}
 			//otherwise mark that there are no more upward expansions from the intitial curExpansion
 			else
@@ -517,7 +437,10 @@ int main()
 			//then push it to the back of the expansion chain for the next loop
 			if (expansions[currentExpansionIndexDown].expansionDirection.back() == -1 && expansions[nextExpansionIndexDown].alreadyInARule == false)
 			{
-				expansionChain.push_back(expansions[nextExpansionIndexDown].rowExpandedfrom);
+				expansionChainRow.push_back(expansions[nextExpansionIndexDown].rowExpandedfrom);
+				expansionIndexChain.push_back(nextExpansionIndexDown);
+				expansionChainCasesCovered.push_back(expansions[nextExpansionIndexUp].numberOfSameRow);//this could be in a vector or something, and probably outside of this if-statement, but 
+																										//for the sake of similarity I have chosen to not do that. 
 			}
 			//otherwise mark that there are no more downward expansions from the intitial curExpansion
 			else
@@ -542,17 +465,21 @@ int main()
 		} // end while loop
 
 		// determine if a rule has been generated
-		if (expansionChain.size() > 1)
+		if (expansionChainRow.size() > 1)
 		{
 			// add the data to the temporary rule so that it can be added to the rule vector
 			// copy the coordinates into the ruleVals vector
-
-			tempRule->ruleValFront = expansionChain.front();
-			tempRule->ruleValBack = expansionChain.back();
+			tempRule->ruleValFront = expansionChainRow.front();
+			tempRule->ruleValBack = expansionChainRow.back();
 
 
 			// calculate coverage of the rule
-			tempRule->coverageCounter = expansionChain.size();
+			tempRule->coverageCounter = 0;
+			for (int i = 0; i < expansionChainCasesCovered.size(); i++)
+			{
+				tempRule->coverageCounter += expansionChainCasesCovered.back();
+				expansionChainCasesCovered.pop_back();
+			}
 
 			// put the class in the rule
 			tempRule->classCovered = data.at(tempRule->ruleValFront).at(data.at(tempRule->ruleValFront).size() - 1);
@@ -564,13 +491,13 @@ int main()
 			clearRule(*tempRule);
 
 			// clear the expansionChain so it can be used again
-			expansionChain.clear();
+			expansionChainRow.clear();
 		}
 		else
 		{
 			// if the expansion chain vector is smaller 2, there is no possible less than rule
 			// clear the expansion Chain vector
-			expansionChain.clear();
+			expansionChainRow.clear();
 		}
 	} // end expansion outer for loop
 
@@ -592,22 +519,38 @@ int main()
 		}
 	}
 
-	cout << "Total rules: " << rules.size() << endl;
+	//cout << "Total rules: " << rules.size() << endl;
 
 	// print results
+	int ruleCount = 1;
 	for(int i = 0; i < rules.size(); i++)
 	{
-		cout << "Rule " << i + 1 << " : " << endl;
+		if (rules.at(i).coverageCounter < 4)
+		{
+			continue;
+		}
+		
+		cout << "Rule " << ruleCount << " : " << endl;
+		ruleCount++;
 
 		for (int dataPrint = 0; dataPrint < data.at(0).size() - 1; dataPrint++)
 		{
+			int back = data.at(rules.at(i).ruleValBack).at(dataPrint);
+			int front = data.at(rules.at(i).ruleValFront).at(dataPrint);
+			if (back > front)
+			{
+				int tempFront = front;
+				front = back;
+				back = tempFront;
+			}
+
 			if (dataPrint == rules.at(i).expansionIndex)
 			{
-				cout << data.at(rules.at(i).ruleValBack).at(dataPrint) << " <= X" << (dataPrint + 1) << " <= " << data.at(rules.at(i).ruleValFront).at(dataPrint) << endl;
+				cout << back << " <= X" << (dataPrint + 1) << " <= " << front << endl;
 			}
 			else
 			{
-				cout << "X" << (dataPrint + 1) << " = " << data.at(rules.at(i).ruleValFront).at(dataPrint) << endl;
+				cout << "X" << (dataPrint + 1) << " = " << front << endl;
 			}
 		}
 
