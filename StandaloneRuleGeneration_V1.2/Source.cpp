@@ -278,19 +278,19 @@ vector<Rule> combineRulesGoodClauses(vector<Rule> rules, vector<vector<int>> dat
 				}
 				if (goodRow)
 				{
-					rules[i].markForErasal = true;
+					//rules[i].markForErasal = true;
 					rules[j].markForErasal = true;
-					Rule newRule = Rule();
-					newRule.classCovered = rules[i].classCovered;
-					newRule.colExpansionIndex.push_back(rules[i].colExpansionIndex[0]);
-					newRule.colExpansionIndex.push_back(rules[j].colExpansionIndex[0]);
-					newRule.coverageCounter = 0;
-					newRule.rowForRuleBack.push_back(rules[i].rowForRuleBack[0]);
-					newRule.rowForRuleBack.push_back(rules[j].rowForRuleBack[0]);
-					newRule.rowForRuleFront.push_back(rules[i].rowForRuleFront[0]);
-					newRule.rowForRuleFront.push_back(rules[j].rowForRuleFront[0]);
-					combinedRules.push_back(newRule);
-					break;//one combination is all we need
+					//Rule newRule = Rule();
+					//newRule.classCovered = rules[i].classCovered;
+					rules[i].colExpansionIndex.push_back(rules[j].colExpansionIndex[0]);
+					//newRule.colExpansionIndex.push_back(rules[j].colExpansionIndex[0]);
+					//newRule.coverageCounter = 0;
+					//newRule.rowForRuleBack.push_back(rules[i].rowForRuleBack[0]);
+					rules[i].rowForRuleBack.push_back(rules[j].rowForRuleBack[0]);
+					//newRule.rowForRuleFront.push_back(rules[i].rowForRuleFront[0]);
+					rules[i].rowForRuleFront.push_back(rules[j].rowForRuleFront[0]);
+					//combinedRules.push_back(newRule);
+					//break;//one combination is all we need
 				}
 			}
 		}
@@ -306,64 +306,78 @@ vector<Rule> combineRulesGoodClauses(vector<Rule> rules, vector<vector<int>> dat
 	return combinedRules;
 }
 
+vector<Rule> generalizeRules(vector<Rule> rules, vector<vector<int>> data, float lowPrecision)
+{
+	//generalize the rules:
+	// go through each attribute, test the data without it--if the coverage goes up and the precision of the rule does not go below low precision, then good. Leave it gone
+	// do this for each attributes, for each rule. 
+	//needed first:
+	// code that tests precision
+	// precision added to Rule struct
+	return {};
+}
 
-//=======needs to be converted to new Rule Struct==================
+int testRule(Rule rule, vector<vector<int>> data)
+{
+	vector<int> epxandedColIndexes = rule.colExpansionIndex;
+	vector<int> minColVals;
+	vector<int> maxColVals;
+	for (int j = 0; j < epxandedColIndexes.size(); j++)//unfortunate brute force method where sometimes the value in rowForRuleBack is bugger than RowForRuleFront
+	{
+		int minColVal = data.at(rule.rowForRuleBack[j]).at(epxandedColIndexes[j]);
+		int maxColVal = data.at(rule.rowForRuleFront[j]).at(epxandedColIndexes[j]);
+
+		minColVals.push_back(minColVal);
+		maxColVals.push_back(maxColVal);
+	}
+
+	//a usable row for accessing the rules other attribute values besides the expansion. either front or back could be used here
+	int usableRowIndex = rule.rowForRuleFront[0];
+	int appliedRows = 0;
+	for (int row = 0; row < data.size(); row++)
+	{
+		bool goodRow = false;
+		for (int col = 0; col < data.at(0).size(); col++)//There is no "-1" here because we want to account for the class... I think
+		{
+			auto it = std::find(epxandedColIndexes.begin(), epxandedColIndexes.end(), col);
+			//if expanded attribute
+			if (it != epxandedColIndexes.end())
+			{
+				int index = std::distance(epxandedColIndexes.begin(), it);
+				//if the val of the current row and col is not within the expanded bounds of the rule, then go the next row
+				if (!(data.at(row).at(col) >= minColVals[index] && data.at(row).at(col) <= maxColVals[index]))
+				{
+					goodRow = false;
+					break;
+				}
+				goodRow = true;
+			}
+			else
+			{
+				//if the current row at the current column does not match the usable row at the current column, then the rule does not apply to that row
+				//go to the next
+				if (!(data.at(row).at(col) == data.at(usableRowIndex).at(col)))
+				{
+					goodRow = false;
+					break;
+				}
+				goodRow = true;
+			}
+		}
+		if (goodRow)
+		{
+			appliedRows++;
+		}
+	}
+	return appliedRows;
+}
+
 //takes in a rule and returns the number of cases in the data which the rule covers
 vector<Rule> testRules(vector<Rule> rules, vector<vector<int>> data)
 {
 	for (int i = 0; i < rules.size(); i++)
 	{
-		vector<int> epxandedColIndexes = rules[i].colExpansionIndex;
-		vector<int> minColVals;
-		vector<int> maxColVals;
-		for (int j = 0; j < epxandedColIndexes.size(); j++)
-		{
-			int minColVal = data.at(rules[i].rowForRuleBack[j]).at(epxandedColIndexes[j]);
-			int maxColVal = data.at(rules[i].rowForRuleFront[j]).at(epxandedColIndexes[j]);
-
-			minColVals.push_back(minColVal);
-			maxColVals.push_back(maxColVal);
-		}
-
-		//a usable row for accessing the rules other attribute values besides the expansion. either front or back could be used here
-		int usableRowIndex = rules[i].rowForRuleFront[0];
-		int appliedRows = 0;
-		for (int row = 0; row < data.size(); row++)
-		{
-			bool goodRow = false;
-			for (int col = 0; col < data.at(0).size(); col++)//There is no "-1" here because we want to account for the class... I think
-			{
-				auto it = std::find(epxandedColIndexes.begin(), epxandedColIndexes.end(), col);
-				//if expanded attribute
-				if (it != epxandedColIndexes.end())
-				{
-					int index = std::distance(epxandedColIndexes.begin(), it);
-					//if the val of the current row and col is not within the expanded bounds of the rule, then go the next row
-					if (!(data.at(row).at(col) >= minColVals[index] && data.at(row).at(col) <= maxColVals[index]))
-					{
-						goodRow = false;
-						break;
-					}
-					goodRow = true;
-				}
-				else
-				{
-					//if the current row at the current column does not match the usable row at the current column, then the rule does not apply to that row
-					//go to the next
-					if (!(data.at(row).at(col) == data.at(usableRowIndex).at(col)))
-					{
-						goodRow = false;
-						break;
-					}
-					goodRow = true;
-				}
-			}
-			if (goodRow)
-			{
-				appliedRows++;
-			}
-		}
-		rules[i].coverageCounter = appliedRows;
+		rules[i].coverageCounter = testRule(rules[i], data);
 	}
 	return rules;
 }
@@ -792,6 +806,10 @@ int main()
 				expansionChainRow.back() = expansionChainRow.front();
 				expansionChainRow.front() = temp;
 			}
+			else if (min == max)
+			{
+				goto ENDFORLOOP;
+			}
 			tempRule->rowForRuleFront.push_back(expansionChainRow.front());
 			tempRule->rowForRuleBack.push_back(expansionChainRow.back());
 
@@ -808,17 +826,11 @@ int main()
 			clearRule(*tempRule);
 
 			// clear the expansionChain so it can be used again
-			expansionChainRow.clear();
-			expansionIndexChain.clear();
+			
 		}
-		else
-		{
-			// if the expansion chain vector is smaller 2, there is no possible less than rule
-			// clear the expansion Chain vector
-			expansionChainRow.clear();
-			expansionIndexChain.clear();
-
-		}
+		ENDFORLOOP:
+		expansionChainRow.clear();
+		expansionIndexChain.clear();
 	} // end expansion outer for loop
 
 
@@ -855,7 +867,6 @@ int main()
 	int ruleCount = 1;
 	for(int i = 0; i < rules.size(); i++)
 	{
-		
 		if (rules[i].coverageCounter < 5)
 		{
 			continue;
@@ -881,12 +892,6 @@ int main()
 			else
 			{
 				cout << "X" << (dataPrint + 1) << " = " << front << endl;
-			}
-
-			//here is an issue; things will be printed twice. Must be fixed
-			for (int k = 0; k < rules.at(i).colExpansionIndex.size(); k++)
-			{
-				
 			}
 		}
 
