@@ -309,11 +309,12 @@ vector<Rule> combineRulesGoodClauses(vector<Rule> rules, vector<vector<int>> dat
 vector<Rule> generalizeRules(vector<Rule> rules, vector<vector<int>> data, float lowPrecision)
 {
 	//generalize the rules:
-	// go through each attribute, test the data without it--if the coverage goes up and the precision of the rule does not go below low precision, then good. Leave it gone
-	// do this for each attributes, for each rule. 
+	// 1) go through each attribute, test the data without it--if the coverage goes up and the precision of the rule does not go below lowPrecision, then good. 
+	// take that attribute out of the rule
+	// 2) do this for each rule, for each attribute. 
 	//needed first:
 	// code that tests precision
-	// precision added to Rule struct
+	// precision variable added to Rule struct
 	return {};
 }
 
@@ -861,7 +862,7 @@ int main()
 	rules = combineRulesGoodClauses(rules, data);
 	rules = testRules(rules, data);
 	std::sort(rules.begin(), rules.end(), compareByCoverage);
-
+	//rule generalization goes here 
 
 	// print results
 	int ruleCount = 1;
